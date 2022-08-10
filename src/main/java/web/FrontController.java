@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-@WebServlet("/*")
+@WebServlet("/")
 public class FrontController extends HttpServlet {
     private TemplateEngine engine;
     private CommandService commandService;
