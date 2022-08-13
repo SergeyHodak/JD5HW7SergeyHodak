@@ -16,7 +16,7 @@ public class Update {
 
         try {
             Company company = new Company();
-            company.setId(Integer.valueOf(setId));
+            company.setId(Long.parseLong(setId));
             company.setName(setName);
             company.setDescription(setDescription);
             error = connections.update(company);

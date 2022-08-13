@@ -1,6 +1,13 @@
 CREATE TABLE company (
-    id INT NOT NULL AUTO_INCREMENT,
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(200) NOT NULL,
-    description VARCHAR(200) NOT NULL,
-    PRIMARY KEY (id)
+    description VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE customer (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    second_name VARCHAR(50) NOT NULL,
+    age INT,
+    CHECK(0 <= age and age <= 150)
 );

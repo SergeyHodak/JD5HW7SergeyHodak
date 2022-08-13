@@ -1,18 +1,16 @@
 package tables.company;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 
 @Entity
-@Getter @Setter
+@Data
 @Table(name = "company")
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private long id;
 
     @Column(name = "name")
     private String name;

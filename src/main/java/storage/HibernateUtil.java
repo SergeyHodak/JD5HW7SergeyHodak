@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import tables.company.Company;
+import tables.customer.Customer;
 
 public class HibernateUtil {
     private static final HibernateUtil INSTANCE;
@@ -21,6 +22,7 @@ public class HibernateUtil {
                 .setProperty("hibernate.connection.username", StorageConstants.DB_USERNAME)
                 .setProperty("hibernate.connection.password", StorageConstants.DB_PASSWORD)
                 .addAnnotatedClass(Company.class)
+                .addAnnotatedClass(Customer.class)
                 .buildSessionFactory();
     }
 
