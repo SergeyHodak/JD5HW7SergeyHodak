@@ -11,3 +11,9 @@ CREATE TABLE customer (
     age INT,
     CHECK(0 <= age and age <= 150)
 );
+
+CREATE TABLE skill (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    department VARCHAR(50),
+    skill_level VARCHAR(50)
+);

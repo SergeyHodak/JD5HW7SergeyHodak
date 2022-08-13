@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import tables.company.Company;
 import tables.customer.Customer;
+import tables.skill.Skill;
 
 public class HibernateUtil {
     private static final HibernateUtil INSTANCE;
@@ -23,6 +24,7 @@ public class HibernateUtil {
                 .setProperty("hibernate.connection.password", StorageConstants.DB_PASSWORD)
                 .addAnnotatedClass(Company.class)
                 .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(Skill.class)
                 .buildSessionFactory();
     }
 
