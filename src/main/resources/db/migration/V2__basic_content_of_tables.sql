@@ -15,3 +15,19 @@ INSERT INTO skill (department, skill_level) VALUES
 ('python', 'junior'),
 ('python', 'middle'),
 ('python', 'senior');
+
+INSERT INTO developer (first_name, second_name, age, gender, salary) VALUES
+('Did', 'Panas', 61, 'MALE', 7000),
+('Fedir', 'Tomson', 45, 'MALE', 4000),
+('Olga', 'Dzi', 50, 'FEMALE', 1000),
+('Oleg', 'Filli', 23, 'MALE', 200),
+('Nina', 'Weendi', 24, 'FEMALE', 500);
+
+INSERT INTO developer_skill (developer_id, skill_id) VALUES
+(1, 3),
+(1, 6),
+(2, 3),
+(3, 2),
+(4, 4),
+(5, 4),
+(5, 1);

@@ -5,17 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <title>Company</title>
+    <title>Developer</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
     <div class="container mt-3">
         <div class="card">
             <div class="card-title">
-                <h2>Use the desired method to interact with the table Customer.</h2>
+                <h2>Use the desired method to interact with the table Developer.</h2>
             </div>
             <div class="card-body">
-                <div class="accordion" id="methods-for-customer">
+                <div class="accordion" id="methods-for-developer">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -23,10 +30,10 @@
                             </button>
                         </h2>
                         <div id="collapseOne"
-                             th:class="'accordion-collapse collapse' + ${(customerId + errorCreate) == '' ? '' : ' show'}"
-                             aria-labelledby="headingOne" data-bs-parent="#methods-for-customer">
+                             th:class="'accordion-collapse collapse' + ${(developerId + errorCreate) == '' ? '' : ' show'}"
+                             aria-labelledby="headingOne" data-bs-parent="#methods-for-developer">
                             <div class="accordion-body">
-                                <form  action="/customer" method="post">
+                                <form  action="/developer" method="post">
                                     <div class="mb-3 row">
                                         <label for="setFirstName" class="col-sm-2 col-form-label">FirstName</label>
                                         <div class="col-sm-10">
@@ -45,6 +52,24 @@
                                             <input type="text" class="form-control" value="" name="setAge" id="setAge">
                                         </div>
                                     </div>
+                                    <div class="mb-3 row">
+                                        <label for="setGender" class="col-sm-2 col-form-label">Gender</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" value="" name="setGender" id="setGender">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="setSalary" class="col-sm-2 col-form-label">Salary</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" value="" name="setSalary" id="setSalary">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="setSkills" class="col-sm-2 col-form-label">Skill IDs number,number</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" value="" name="setSkills" id="setSkills">
+                                        </div>
+                                    </div>
                                     <div class="d-grid gap-2">
                                         <button class="btn btn-primary" type="submit">Create</button>
                                     </div>
@@ -52,7 +77,7 @@
                                 <br>
                                 <div class="container text-center">
                                     <div class="col-md-6 offset-md-3">
-                                        <h4 style="color:#00ff00" th:if="${customerId.length()} != 0" th:text="'ID=' + ${customerId}"></h4>
+                                        <h4 style="color:#00ff00" th:if="${developerId.length()} != 0" th:text="'ID=' + ${developerId}"></h4>
                                         <h4 style="color:#ff0000" th:if="${errorCreate.length()} != 0" th:text="'Error: ' + ${errorCreate}"></h4>
                                     </div>
                                 </div>
@@ -68,10 +93,10 @@
                             </button>
                         </h2>
                         <div id="collapseTwo"
-                             th:class="'accordion-collapse collapse' + ${(customer + errorGetById) == '' ? '' : ' show'}"
-                             aria-labelledby="headingTwo" data-bs-parent="#methods-for-customer">
+                             th:class="'accordion-collapse collapse' + ${(developer + errorGetById) == '' ? '' : ' show'}"
+                             aria-labelledby="headingTwo" data-bs-parent="#methods-for-developer">
                             <div class="accordion-body">
-                                <form  action="/customer" method="post">
+                                <form  action="/developer" method="post">
                                     <div class="mb-3 row">
                                         <label for="setId" class="col-sm-2 col-form-label">ID</label>
                                         <div class="col-sm-10">
@@ -83,20 +108,37 @@
                                     </div>
                                 </form>
                                 <br>
-                                <div th:if="${customer} != ''">
+                                <div th:if="${developer} != ''">
                                     <table class="table">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>FirstName</th>
-                                            <th>SecondName</th>
-                                            <th>Age</th>
-                                        </tr>
-                                        <tr>
-                                            <td th:text="${customer.id}"></td>
-                                            <td th:text="${customer.firstName}"></td>
-                                            <td th:text="${customer.secondName}"></td>
-                                            <td th:text="${customer.age}"></td>
-                                        </tr>
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2" colspan="1">ID</th>
+                                                <th rowspan="2" colspan="1">FirstName</th>
+                                                <th rowspan="2" colspan="1">SecondName</th>
+                                                <th rowspan="2" colspan="1">Age</th>
+                                                <th rowspan="2" colspan="1">Gender</th>
+                                                <th rowspan="2" colspan="1">Salary</th>
+                                                <th rowspan="1" colspan="3">Skills</th>
+                                            </tr>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Department</th>
+                                                <th>SkillLevel</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="skill,pos : ${developer.skills}">
+                                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.id}"></td>
+                                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.firstName}"></td>
+                                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.secondName}"></td>
+                                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.age}"></td>
+                                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.gender}"></td>
+                                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.salary}"></td>
+                                                <td th:text="${skill.id}"></td>
+                                                <td th:text="${skill.department}"></td>
+                                                <td th:text="${skill.skillLevel}"></td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="container text-center">
@@ -118,28 +160,60 @@
                             </button>
                         </h2>
                         <div id="collapseThree"
-                             th:class="'accordion-collapse collapse' + ${customers == '' ? '' : ' show'}"
-                             aria-labelledby="headingThree" data-bs-parent="#methods-for-customer">
+                             th:class="'accordion-collapse collapse' + ${developers == '' ? '' : ' show'}"
+                             aria-labelledby="headingThree" data-bs-parent="#methods-for-developer">
                             <div class="accordion-body">
-                                <form  action="/customer" method="post">
+                                <form  action="/developer" method="post">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Department..." name="setDepartment" id="setDepartment">
+                                        <button class="btn btn-primary" type="submit">getDevelopersByDepartment</button>
+                                    </div>
+                                </form>
+                                <form  action="/developer" method="post">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="SkillLevel..." name="setSkillLevel" id="setSkillLevel">
+                                        <button class="btn btn-primary" type="submit">getDevelopersBySkillLevel</button>
+                                    </div>
+                                </form>
+                                <form  action="/developer" method="post">
                                     <div class="d-grid gap-2">
                                         <button class="btn btn-primary" type="submit">getAll</button>
                                     </div>
                                 </form>
-                                <div th:if="${customers} != ''">
+                                <br>
+                                <div th:if="${developers} != ''">
                                     <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th rowspan="2" colspan="1">ID</th>
+                                            <th rowspan="2" colspan="1">FirstName</th>
+                                            <th rowspan="2" colspan="1">SecondName</th>
+                                            <th rowspan="2" colspan="1">Age</th>
+                                            <th rowspan="2" colspan="1">Gender</th>
+                                            <th rowspan="2" colspan="1">Salary</th>
+                                            <th rowspan="1" colspan="3">Skills</th>
+                                        </tr>
                                         <tr>
                                             <th>ID</th>
-                                            <th>FirstName</th>
-                                            <th>SecondName</th>
-                                            <th>Age</th>
+                                            <th>Department</th>
+                                            <th>SkillLevel</th>
                                         </tr>
-                                        <tr th:each="customer: ${customers}">
-                                            <td th:text="${customer.id}"></td>
-                                            <td th:text="${customer.firstName}"></td>
-                                            <td th:text="${customer.secondName}"></td>
-                                            <td th:text="${customer.age}"></td>
-                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <div th:each="developer : ${developers}">
+                                                <tr th:each="skill,pos : ${developer.skills}">
+                                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.id}"></td>
+                                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.firstName}"></td>
+                                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.secondName}"></td>
+                                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.age}"></td>
+                                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.gender}"></td>
+                                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.salary}"></td>
+                                                    <td th:text="${skill.id}"></td>
+                                                    <td th:text="${skill.department}"></td>
+                                                    <td th:text="${skill.skillLevel}"></td>
+                                                </tr>
+                                            </div>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -154,10 +228,10 @@
                             </button>
                         </h2>
                         <div id="collapseFour"
-                             th:class="'accordion-collapse collapse' + ${(errorUpdate + errorUpdate) == '' ? '' : ' show'}"
-                             aria-labelledby="headingFour" data-bs-parent="#methods-for-customer">
+                             th:class="'accordion-collapse collapse' + ${errorUpdate == '' ? '' : ' show'}"
+                             aria-labelledby="headingFour" data-bs-parent="#methods-for-developer">
                             <div class="accordion-body">
-                                <form  action="/customer" method="post">
+                                <form  action="/developer" method="post">
                                     <div class="mb-3 row">
                                         <label for="updateId" class="col-sm-2 col-form-label">ID</label>
                                         <div class="col-sm-10">
@@ -180,6 +254,24 @@
                                         <label for="updateAge" class="col-sm-2 col-form-label">Age</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" value="" name="updateAge" id="updateAge">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="updateGender" class="col-sm-2 col-form-label">Gender</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" value="" name="updateGender" id="updateGender">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="updateSalary" class="col-sm-2 col-form-label">Salary</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" value="" name="updateSalary" id="updateSalary">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="updateSkills" class="col-sm-2 col-form-label">Skill IDs number,number</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" value="" name="updateSkills" id="updateSkills">
                                         </div>
                                     </div>
                                     <div class="d-grid gap-2">
@@ -208,9 +300,9 @@
                         </h2>
                         <div id="collapseFive"
                              th:class="'accordion-collapse collapse' + ${errorDeleteById == '' ? '' : ' show'}"
-                             aria-labelledby="headingFive" data-bs-parent="#methods-for-customer">
+                             aria-labelledby="headingFive" data-bs-parent="#methods-for-developer">
                             <div class="accordion-body">
-                                <form  action="/customer" method="post">
+                                <form  action="/developer" method="post">
                                     <div class="mb-3 row">
                                         <label for="deleteId" class="col-sm-2 col-form-label">ID</label>
                                         <div class="col-sm-10">

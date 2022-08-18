@@ -2,6 +2,10 @@ package tables.skill;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import tables.developer.Developer;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,4 +21,7 @@ public class Skill {
 
     @Column(name = "skill_level")
     private String skillLevel;
+
+    @ManyToMany(targetEntity = Developer.class, mappedBy = "skills")
+    private static Set<Developer> developers = new HashSet<>();
 }

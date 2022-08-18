@@ -33,6 +33,9 @@ public class SkillCommands implements Command {
 
     @Override
     public void process(HttpServletRequest req, HttpServletResponse resp, TemplateEngine engine) throws IOException {
+        for (String key : params.keySet()) {
+            params.replace(key, "");
+        }
         String method = req.getMethod();
         if (method.equals("POST")) {
             if (req.getParameter("setDepartment") != null) {
