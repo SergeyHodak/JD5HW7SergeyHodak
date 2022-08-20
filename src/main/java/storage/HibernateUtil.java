@@ -6,6 +6,7 @@ import org.hibernate.cfg.Configuration;
 import tables.company.Company;
 import tables.customer.Customer;
 import tables.developer.Developer;
+import tables.project.Project;
 import tables.skill.Skill;
 
 public class HibernateUtil {
@@ -27,6 +28,7 @@ public class HibernateUtil {
                 .addAnnotatedClass(Customer.class)
                 .addAnnotatedClass(Skill.class)
                 .addAnnotatedClass(Developer.class)
+                .addAnnotatedClass(Project.class)
                 .buildSessionFactory();
     }
 

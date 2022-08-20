@@ -1,5 +1,6 @@
 package tables.developer;
 
+import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
@@ -67,9 +68,36 @@ public class HibernateDeveloperService implements DeveloperService {
                 developer.setSkills(skills);
                 session.merge(developer);
             transaction.commit();
+            updateCostByDeveloperId(developer.getId());
             return "true";
         } catch (Exception e) {
             return e.getMessage();
+        }
+    }
+
+    private void updateCostByDeveloperId(long id) {
+        try(Session session = openSession()) {
+            String sql =
+                "UPDATE project AS T1" + '\n' +
+                "SET T1.cost = (" + '\n' +
+                "    SELECT SUM(salary)" + '\n' +
+                "    FROM developer AS T2" + '\n' +
+                "    WHERE T2.id IN (" + '\n' +
+                "        SELECT T3.developer_id" + '\n' +
+                "        FROM project_developer AS T3" + '\n' +
+                "        WHERE T3.project_id=T1.id" + '\n' +
+                "    )" + '\n' +
+                ")" + '\n' +
+                "WHERE T1.id IN (" + '\n' +
+                "    SELECT T2.project_id" + '\n' +
+                "    FROM project_developer AS T2" + '\n' +
+                "    WHERE T2.developer_id = ?" + '\n' +
+                ")";
+            Transaction transaction = session.beginTransaction();
+                Query query = session.createNativeQuery(sql, Integer.class);
+                query.setParameter(1, id);
+                query.executeUpdate();
+            transaction.commit();
         }
     }
 

@@ -2,6 +2,7 @@ package tables.developer;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import tables.project.Project;
 import tables.skill.Skill;
 
 import java.util.HashSet;
@@ -39,6 +40,9 @@ public class Developer {
     )
     @ManyToMany(targetEntity = Skill.class)
     private Set<Skill> skills = new HashSet<>();
+
+    @ManyToMany(targetEntity = Project.class, mappedBy = "developers")
+    private static Set<Project> projects = new HashSet<>();
 
     public enum Gender {
         MALE,

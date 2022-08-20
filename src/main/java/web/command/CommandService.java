@@ -4,6 +4,7 @@ import org.thymeleaf.TemplateEngine;
 import web.command.company.CompanyCommands;
 import web.command.customer.CustomerCommands;
 import web.command.developer.DeveloperCommands;
+import web.command.project.ProjectCommands;
 import web.command.skill.SkillCommands;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class CommandService {
         commands.put("/customer", new CustomerCommands());
         commands.put("/skill", new SkillCommands());
         commands.put("/developer", new DeveloperCommands());
+        commands.put("/project", new ProjectCommands());
     }
 
     public void process(HttpServletRequest req, HttpServletResponse resp, TemplateEngine engine) throws IOException {
