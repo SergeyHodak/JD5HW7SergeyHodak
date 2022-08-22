@@ -1,9 +1,9 @@
-package web.command.project;
+package web.command.skill;
 
-import lombok.Data;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import tables.project.HibernateProjectService;
+import tables.skill.HibernateSkillService;
+import tables.skill.Skill;
 import web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,38 +12,32 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetCostById implements Command {
+public class SkillUpdate implements Command {
     @Override
     public void process(HttpServletRequest req, HttpServletResponse resp, TemplateEngine engine) throws IOException {
         String error = "";
-        CostFormat result = new CostFormat();
         String method = req.getMethod();
         if (method.equals("POST")) {
-            String id = req.getParameter("getCostById");
+            String setId = req.getParameter("updateId");
+            String updateDepartment = req.getParameter("updateDepartment");
+            String updateSkillLevel = req.getParameter("updateSkillLevel");
+
             try {
-                long projectId = Long.parseLong(id);
-                double costById = HibernateProjectService.getInstance().getCostById(projectId);
-                result.setCost(costById);
-                result.setId(projectId);
+                Skill skill = new Skill(updateDepartment, updateSkillLevel);
+                skill.setId(Long.parseLong(setId));
+                error = HibernateSkillService.getInstance().update(skill);
             } catch (Exception e) {
                 error = e.getMessage();
             }
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("costById", result.getId() == 0 ? "" : result);
-        params.put("errorGetById", error);
+        params.put("errorUpdate", error);
         resp.setContentType("text/html");
         Context simpleContext = new Context(
                 req.getLocale(),
                 params
         );
-        engine.process("project/project-get-by-id", simpleContext, resp.getWriter());
+        engine.process("skill/skill-update", simpleContext, resp.getWriter());
         resp.getWriter().close();
-    }
-
-    @Data
-    private static class CostFormat {
-        private long id;
-        private double cost;
     }
 }

@@ -8,6 +8,7 @@ import tables.company.Company;
 import tables.customer.Customer;
 import tables.developer.Developer;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class HibernateProjectService implements ProjectService {
@@ -22,17 +23,16 @@ public class HibernateProjectService implements ProjectService {
     }
 
     @Override
-    public long create(Project project, long companyId, long customerId, long[] developerIds) {
+    public long create(String name, long companyId, long customerId, LocalDate creationDate, long[] developerIds) {
         Session session = openSession();
             Transaction transaction = session.beginTransaction();
                 Company company = session.get(Company.class, companyId);
-                project.setCompany(company);
                 Customer customer = session.get(Customer.class, customerId);
-                project.setCustomer(customer);
                 Set<Developer> developers = new HashSet<>();
                 for (long developerId : developerIds) {
                     developers.add(session.get(Developer.class, developerId));
                 }
+                Project project = new Project(name, company, customer, creationDate);
                 project.setDevelopers(developers);
                 session.persist(project);
             transaction.commit();
@@ -127,21 +127,20 @@ public class HibernateProjectService implements ProjectService {
     }
 
     @Override
-    public String update(Project project, long companyId, long customerId, long[] developerIds) {
+    public String update(long id, String name, long companyId, long customerId, LocalDate creationDate, long[] developerIds) {
         try (Session session = openSession()){
             Transaction transaction = session.beginTransaction();
                 Company company = session.get(Company.class, companyId);
-                project.setCompany(company);
                 Customer customer = session.get(Customer.class, customerId);
-                project.setCustomer(customer);
                 Set<Developer> developers = new HashSet<>();
                 for (long developerId : developerIds) {
                     developers.add(session.get(Developer.class, developerId));
                 }
+                Project project = new Project(name, company, customer, creationDate);
+                project.setId(id);
                 project.setDevelopers(developers);
                 session.merge(project);
             transaction.commit();
-            long id = project.getId();
             updateCostByProjectId(id);
             return "true";
         } catch (Exception e) {

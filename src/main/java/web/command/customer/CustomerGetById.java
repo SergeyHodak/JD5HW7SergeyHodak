@@ -1,36 +1,40 @@
-package web.command.project;
+package web.command.customer;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import tables.project.HibernateProjectService;
-import tables.project.ProjectSpecialFormat;
+import tables.customer.Customer;
+import tables.customer.HibernateCustomerService;
 import web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class GetAllBySpecialFormat implements Command {
+public class CustomerGetById implements Command {
     @Override
     public void process(HttpServletRequest req, HttpServletResponse resp, TemplateEngine engine) throws IOException {
-        List<ProjectSpecialFormat> projects = new ArrayList<>();
+        Customer customer = null;
+        String error = "";
         String method = req.getMethod();
         if (method.equals("POST")) {
-            projects = HibernateProjectService.getInstance().getAllBySpecialFormat();
+            String id = req.getParameter("setId");
+            try {
+                customer = HibernateCustomerService.getInstance().getById(Long.parseLong(id));
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("projectsSpecialFormat", projects.size() == 0 ? "" : projects);
-        params.put("projects", "");
+        params.put("customer", customer == null ? "" : customer);
+        params.put("errorGetById", error);
         resp.setContentType("text/html");
         Context simpleContext = new Context(
                 req.getLocale(),
                 params
         );
-        engine.process("project/project-get-all", simpleContext, resp.getWriter());
+        engine.process("customer/customer-get-by-id", simpleContext, resp.getWriter());
         resp.getWriter().close();
     }
 }

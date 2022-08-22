@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Project</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-title">
+                <h2 align="center">Use the desired method to interact with the table Project.</h2>
+            </div>
+            <div class="card-body">
+                <form  action="/project-create" method="get" class="d-grid gap-2">
+                    <button class="btn" type="submit">Create</button>
+                </form>
+                <br>
+                <form  action="/project-get-by-id" method="get" class="d-grid gap-2">
+                    <button class="btn" type="submit">GetById</button>
+                </form>
+                <br>
+                <form  action="/project-get-all" method="get" class="d-grid gap-2">
+                    <button class="btn" type="submit">GetAll</button>
+                </form>
+                <br>
+                <form  action="/project-update" method="get" class="d-grid gap-2">
+                    <button class="btn" type="submit">Update</button>
+                </form>
+                <br>
+                <form  action="/project-delete-by-id" method="get" class="d-grid gap-2">
+                    <button class="btn" type="submit">DeleteById</button>
+                </form>
+            </div>
+            <a href="/" class="btn btn-sm btn-secondary">Back</a>
+        </div>
+    </div>
+</body>
+</html>

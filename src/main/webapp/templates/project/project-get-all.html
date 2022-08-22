@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Project GetAll</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-body">
+                <form  action="/get-all-by-special-format" method="post">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit" value="1" name="specialFormat" id="specialFormat">GetAllBySpecialFormat</button>
+                    </div>
+                </form>
+                <br>
+                <form  action="/project-get-all" method="post">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit">getAll</button>
+                    </div>
+                </form>
+                <br>
+                <div th:if="${projects} != ''">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Company ID</th>
+                                <th>Customer ID</th>
+                                <th>Cost</th>
+                                <th>CreationDate</th>
+                                <th>Developer IDs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="project : ${projects}">
+                                <td th:text="${project.id}"></td>
+                                <td th:text="${project.name}"></td>
+                                <td th:text="${project.companyId}"></td>
+                                <td th:text="${project.customerId}"></td>
+                                <td th:text="${project.cost}"></td>
+                                <td th:text="${project.creationDate}"></td>
+                                <td th:text="${project.developers}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${projectsSpecialFormat} != ''">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>CreationDate</th>
+                            <th>Name</th>
+                            <th>Developer Count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="project : ${projectsSpecialFormat}">
+                            <td th:text="${project.creationDate}"></td>
+                            <td th:text="${project.name}"></td>
+                            <td th:text="${project.developerCount}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a href="/project" class="btn btn-sm btn-secondary">Back</a>
+        </div>
+    </div>
+</body>
+</html>

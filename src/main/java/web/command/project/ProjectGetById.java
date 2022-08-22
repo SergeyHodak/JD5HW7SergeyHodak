@@ -4,35 +4,46 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import tables.developer.Developer;
 import tables.project.HibernateProjectService;
+import tables.project.Project;
 import web.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-public class GetDevelopersByProjectId implements Command {
+public class ProjectGetById implements Command {
     @Override
     public void process(HttpServletRequest req, HttpServletResponse resp, TemplateEngine engine) throws IOException {
+        Format format = new Format();
         String error = "";
-        Set<Developer> result = new HashSet<>();
-        long projectId = 0;
         String method = req.getMethod();
         if (method.equals("POST")) {
-            String id = req.getParameter("getDevelopersByProjectId");
+            String id = req.getParameter("setId");
             try {
-                projectId = Long.parseLong(id);
-                result = HibernateProjectService.getInstance().getDevelopersByProjectId(projectId);
+                Project project = HibernateProjectService.getInstance().getById(Long.parseLong(id));
+                if (project.getId() != 0) {
+                    format.setId(project.getId());
+                    format.setName(project.getName());
+                    format.setCompanyId(project.getCompany().getId());
+                    format.setCustomerId(project.getCustomer().getId());
+                    format.setCost(project.getCost());
+                    format.setCreationDate(project.getCreationDate());
+                    List<Long> developerIds = new ArrayList<>();
+                    for (Developer developer : project.getDevelopers()) {
+                        developerIds.add(developer.getId());
+                    }
+                    format.setDevelopers(developerIds);
+                }
             } catch (Exception e) {
                 error = e.getMessage();
             }
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("developers", result.size() == 0 ? "" : result);
-        params.put("pos", projectId);
+        params.put("project", format.getId() == 0 ? "" : format);
         params.put("errorGetById", error);
         resp.setContentType("text/html");
         Context simpleContext = new Context(

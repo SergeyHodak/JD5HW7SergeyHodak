@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Developer GetAll</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-body">
+                <form  action="/get-developers-by-department" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Department..." name="setDepartment" id="setDepartment">
+                        <button class="btn btn-primary" type="submit">getDevelopersByDepartment</button>
+                    </div>
+                </form>
+                <form  action="/get-developers-by-skill-level" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="SkillLevel..." name="setSkillLevel" id="setSkillLevel">
+                        <button class="btn btn-primary" type="submit">getDevelopersBySkillLevel</button>
+                    </div>
+                </form>
+                <form  action="/developer-get-all" method="post">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="submit">getAll</button>
+                    </div>
+                </form>
+                <br>
+                <div th:if="${developers} != ''">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th rowspan="2" colspan="1">ID</th>
+                            <th rowspan="2" colspan="1">FirstName</th>
+                            <th rowspan="2" colspan="1">SecondName</th>
+                            <th rowspan="2" colspan="1">Age</th>
+                            <th rowspan="2" colspan="1">Gender</th>
+                            <th rowspan="2" colspan="1">Salary</th>
+                            <th rowspan="1" colspan="3">Skills</th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Department</th>
+                            <th>SkillLevel</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <div th:each="developer : ${developers}">
+                                <tr th:each="skill,pos : ${developer.skills}">
+                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.id}"></td>
+                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.firstName}"></td>
+                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.secondName}"></td>
+                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.age}"></td>
+                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.gender}"></td>
+                                    <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.salary}"></td>
+                                    <td th:text="${skill.id}"></td>
+                                    <td th:text="${skill.department}"></td>
+                                    <td th:text="${skill.skillLevel}"></td>
+                                </tr>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <a href="/developer" class="btn btn-sm btn-secondary">Back</a>
+        </div>
+    </div>
+</body>
+</html>

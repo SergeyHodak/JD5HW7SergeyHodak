@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>Project GetById</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-body">
+                <form  action="/project-get-by-id" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Project ID..." name="setId" id="setId">
+                        <button class="btn btn-primary" type="submit">Get</button>
+                    </div>
+                </form>
+                <br>
+                <form  action="/get-cost-by-id" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Project ID..." name="getCostById" id="getCostById">
+                        <button class="btn btn-primary" type="submit">getCostById</button>
+                    </div>
+                </form>
+                <br>
+                <form  action="/get-developers-by-project-id" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Project ID..." name="getDevelopersByProjectId" id="getDevelopersByProjectId">
+                        <button class="btn btn-primary" type="submit">GetDevelopersByProjectId</button>
+                    </div>
+                </form>
+                <br>
+                <div th:if="${project} != null ? ${project} != '' : false">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Company ID</th>
+                                <th>Customer ID</th>
+                                <th>Cost</th>
+                                <th>CreationDate</th>
+                                <th>Developer IDs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="${project.id}"></td>
+                                <td th:text="${project.name}"></td>
+                                <td th:text="${project.companyId}"></td>
+                                <td th:text="${project.customerId}"></td>
+                                <td th:text="${project.cost}"></td>
+                                <td th:text="${project.creationDate}"></td>
+                                <td th:text="${project.developers}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${costById} != null ? ${costById} != '' : false">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="${costById.id}"></td>
+                                <td th:text="${costById.cost}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${developers} != null ? ${developers} != '' : false">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th colspan="9" th:text="'Project ID = ' + ${pos}"></th>
+                        </tr>
+                        <tr>
+                            <th rowspan="2" colspan="1">ID</th>
+                            <th rowspan="2" colspan="1">FirstName</th>
+                            <th rowspan="2" colspan="1">SecondName</th>
+                            <th rowspan="2" colspan="1">Age</th>
+                            <th rowspan="2" colspan="1">Gender</th>
+                            <th rowspan="2" colspan="1">Salary</th>
+                            <th rowspan="1" colspan="3">Skills</th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Department</th>
+                            <th>SkillLevel</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:each="developer : ${developers}">
+                            <tr th:each="skill,pos : ${developer.skills}">
+                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.id}"></td>
+                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.firstName}"></td>
+                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.secondName}"></td>
+                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.age}"></td>
+                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.gender}"></td>
+                                <td th:if="${pos.index == 0}" th:rowspan="${developer.skills.size() == 0 ? 1 : developer.skills.size()}" th:text="${developer.salary}"></td>
+                                <td th:text="${skill.id}"></td>
+                                <td th:text="${skill.department}"></td>
+                                <td th:text="${skill.skillLevel}"></td>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <h4 style="color:#ff0000" th:if="${errorGetById} != ''" th:text="'Error: ' + ${errorGetById}"></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/project" class="btn btn-sm btn-secondary">Back</a>
+        </div>
+    </div>
+</body>
+</html>
